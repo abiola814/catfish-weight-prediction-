@@ -28,12 +28,12 @@ def predict_weights(feed_type, initial_weight):
     for week in range(1, 9):
         weight_week = df.at[f'week {week}', feed_type]
         pattern_value = weight_week / initial_weight_week0
-        pattern_value=math.ceil(pattern_value)
+        
         pattern.append(pattern_value)
 
 	# Predict the weights for the next 8 we
     # Use the calculated pattern to predict the weights for weeks 1 to 8
-    predicted_weights = [initial_weight * pattern_value for pattern_value in pattern]
+    predicted_weights = [math.ceil(initial_weight * pattern_value) for pattern_value in pattern]
 
     return predicted_weights
 
