@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <title>Software</title>
+</head>
+<body>
+  <body>
+    <section id="img">
+        <nav id="nav">
+            <ul class="nav-list">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/about.html" class="">About The Software</a></li>
+            </ul>
+        </nav>
+        <section id="section">
+            <div class="container">
+                <div class="terms">
+                    <h1 class="title">Terms & Conditions</h1>
+                    <ul>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                        <li class="list-item">Vorem ipsum dolor sit amet, consectetu adipiscing elit. Nunc vulputate libero et velit interdum, aliquet odio mattis.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h1 class="title" style="text-align: center;">EXPERIMENT</h1>
+                    <div class="div-experiment">
+                        <h2>CONSTITUENT</h2>
+                        <div class="table-div">
+                            <div class="beside-table">
+                                <h3>Rice</h3>
+                                <h3>Beans</h3>
+                            </div>
+                            <table>
+                                <thead class="table-head">
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>C</th>
+                                    <th>D</th>
+                                    <th>E</th>
+                                    <th>F</th>
+                                    <th>G</th>
+                                    <th>H</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <tr>
+                                    <td>20</td>
+                                    <td>70</td>
+                                    <td>50</td>
+                                    <td>60</td>
+                                    <td>10</td>
+                                    <td>75</td>
+                                    <td>55</td>
+                                    <td>95</td>
+                                </tr>
+                                <tr>
+                                    <td>20</td>
+                                    <td>70</td>
+                                    <td>50</td>
+                                    <td>60</td>
+                                    <td>10</td>
+                                    <td>75</td>
+                                    <td>55</td>
+                                    <td>95</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <form action="">
+                            <input type="text"  name="initial_weight" id="initial_weight"  placeholder="Input Initial Weight" class="input">
+                        </form>
+                        <select  id="feed_type" select">
+			<option style="color:black"; value="A">Experiment A</option>
+			<option style="color:black"; value="B">Experiment B</option>
+			<option style="color:black"; value="C">Experiment C</option>
+			<option style="color:black"; value="D">Experiment D</option>
+			<option style="color:black"; value="E">Experiment E</option>
+			<option style="color:black"; value="F">Experiment F</option>
+		
+			
+                        </select>
+                   </div>
+                   <button id="predict-button" type="button">PREDICT</button>
+                       <div id="popup">
+                        <span id="close-popup" class="material-symbols-outlined close">close</span>
+                    <div class="popup">
+                        <h2>YOUR PREDICTION</h2>
+                        <img src="{{ url_for('static', filename='fish.svg') }}" alt="" class="img">
+                                        <div id="prediction-content">
+            <!-- Predicted weights for each week will be inserted here -->
+        			</div>
+                    </div>
+                   </div>
+               </div>
+           </div>
+     </section>
+        <footer>
+            <div class="in-footer">
+                <div class="name">
+                    <p>PROJECT DONE BY nKWOR pRECIOUS ONYEKACHUKWU</p>
+                    <p>UNDER THE SUPERVISION</p>
+                    <p>OF</p>
+                    <h1>PROF A.M. HAMMED</h1>
+                </div>
+                <div class="down-div">
+                    <p class="p">powered by <strong>UNILAG FISHERY STUDENT</strong></p>
+                    <p>PROJECTCATFISH2023.All rights reserved</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+<script>
+// ... (Previous JavaScript code)
+
+$(document).ready(function() {
+    // Handle the button click event
+    $("#predict-button").click(function() {
+        // Get the user inputs
+        var initialWeight = $("#initial_weight").val();
+        var feedType = $("#feed_type").val();
+
+        // Prepare the data to be sent in the AJAX request
+        var requestData = {
+            initial_weight: initialWeight,
+            feed_type: feedType
+        };
+
+        // Send an AJAX POST request to the Flask route
+        $.ajax({
+            type: "POST",
+            url: "/",
+            data: requestData,
+            success: function(response) {
+                if ("predictions" in response) {
+                    // Display the prediction results in a popup
+                    showPopupResults(response.predictions);
+                } else if ("error" in response) {
+                    // Display an error message in a popup
+                    showPopupError(response.error);
+                }
+            },
+            error: function(error) {
+                // Handle any errors
+                console.error("AJAX request error:", error);
+            }
+        });
+    });
+});
+
+// Function to show a popup with prediction results
+// Function to show a popup with prediction results
+function showPopupResults(predictions) {
+    var popupContent = "";
+    
+    // Generate HTML for each prediction week
+    for (var i = 0; i < predictions.length; i++) {
+        popupContent += "<p>Week " + (i + 1) + " Weight: " + predictions[i] + "G</p>";
+    }
+
+    // Insert the generated HTML into the popup
+    $("#prediction-content").html(popupContent);
+
+    // Show the popup
+    $("#popup").show();
+}
+
+
+// Function to show a popup with an error message
+function showPopupError(errorMessage) {
+    alert("Error: " + errorMessage);
+}
+    // Handle the close button click event
+    $("#close-popup").click(function() {
+        // Close the popup by hiding it
+        $("#popup").hide();
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</body>
+
+</html>
