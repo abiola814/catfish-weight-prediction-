@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify  # Import jsonify
-
+import math
 
 app = Flask(__name__)
 
@@ -28,6 +28,7 @@ def predict_weights(feed_type, initial_weight):
     for week in range(1, 9):
         weight_week = df.at[f'week {week}', feed_type]
         pattern_value = weight_week / initial_weight_week0
+        pattern_value=math.ceil(pattern_value)
         pattern.append(pattern_value)
 
 	# Predict the weights for the next 8 we
