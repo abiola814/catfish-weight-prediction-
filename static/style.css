@@ -16,11 +16,15 @@ body{
 #popup{
     background: white;
     position: absolute;
-    bottom: -70%;
-    width: 85%;
-    
+    bottom: 20%;
+    right: 20%;
+    width: 25rem;
+   
     padding-top: 1rem;
     display: none;
+}
+.close{
+    float: right;
 }
 .popup{
     display: flex;
@@ -211,9 +215,6 @@ footer{
     margin: 5rem 18.5rem 3rem 18.5rem;
     opacity: .8;
 }
-.close{
-    float: right;
-}
 
 @media screen and (max-width: 600px){
     body::-webkit-scrollbar{
@@ -323,6 +324,21 @@ footer{
         margin-bottom: .6rem;
 
     }
+    #popup{
+        background: white;
+        position: absolute;
+        bottom: -70%;
+        width: 85%;
+        
+        padding-top: 1rem;
+        display: none;
+    }
+    .popup{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
     .about-section {
         padding: 1rem;
         border-radius: 15px;
@@ -334,7 +350,4 @@ footer{
         margin-bottom: 2rem;
         font-size: .8rem;
     }
-    .close{
-    float: right;
-}
 }
