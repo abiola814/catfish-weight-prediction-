@@ -58,6 +58,10 @@ def index():
         else:
             pass
     return render_template('index.html', feed_type=None, initial_weight=None, predictions=None)
+    
+@app.route('/about/', methods=['GET', 'POST'])
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
